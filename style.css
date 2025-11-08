@@ -296,7 +296,7 @@ input:focus,
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 16px;
-    margin-bottom: 16px;
+    margin-bottom: 30px;
 }
 
 .chart-wrapper {
@@ -344,8 +344,8 @@ input:focus,
 
 .chart-text {
     position: absolute;
-    top: 50%;
-    left: 50%;
+    top: 55%;
+    left: 60%;
     transform: translate(-50%, -50%);
     text-align: center;
 }
@@ -617,4 +617,5 @@ input:focus,
     .chart-value {
         font-size: 20px;
     }
+
 }
