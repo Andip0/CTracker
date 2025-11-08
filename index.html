@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calorie & Protein Tracker</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Profile Setup Screen -->
+    <div id="profileScreen" class="screen active">
+        <div class="container">
+            <div class="card">
+                <h1>Profile Setup</h1>
+                
+                <div class="form-group">
+                    <label>Gender</label>
+                    <div class="gender-buttons">
+                        <button class="gender-btn" data-gender="male">Male</button>
+                        <button class="gender-btn" data-gender="female">Female</button>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Age (years)</label>
+                    <input type="number" id="age" placeholder="25">
+                </div>
+
+                <div class="form-group">
+                    <label>Weight (kg)</label>
+                    <input type="number" step="0.1" id="weight" placeholder="70">
+                </div>
+
+                <div class="form-group">
+                    <label>Height (cm)</label>
+                    <input type="number" id="height" placeholder="175">
+                </div>
+
+                <div class="form-group">
+                    <label>Activity Level</label>
+                    <select id="activityLevel" class="activity-select">
+                        <option value="1.2">Sedentary (little or no exercise)</option>
+                        <option value="1.375">Lightly Active (1-3 days/week)</option>
+                        <option value="1.55" selected>Moderately Active (3-5 days/week)</option>
+                        <option value="1.725">Very Active (6-7 days/week)</option>
+                        <option value="1.9">Extremely Active (athlete/physical job)</option>
+                    </select>
+                </div>
+
+                <button class="btn btn-primary" id="calculateBtn">Calculate Goals</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Goal Selection Screen -->
+    <div id="goalScreen" class="screen">
+        <div class="container">
+            <div class="card">
+                <h1>Choose Your Goal</h1>
+                
+                <button class="goal-card goal-deficit" data-goal="deficit">
+                    <div class="goal-title">Weight Loss</div>
+                    <div class="goal-calories" id="deficitCal">0 cal</div>
+                    <div class="goal-subtitle">15% deficit</div>
+                </button>
+
+                <button class="goal-card goal-maintenance" data-goal="maintenance">
+                    <div class="goal-title">Maintenance</div>
+                    <div class="goal-calories" id="maintenanceCal">0 cal</div>
+                    <div class="goal-subtitle">Maintain current weight</div>
+                </button>
+
+                <button class="goal-card goal-surplus" data-goal="surplus">
+                    <div class="goal-title">Muscle Gain</div>
+                    <div class="goal-calories" id="surplusCal">0 cal</div>
+                    <div class="goal-subtitle">20% surplus</div>
+                </button>
+
+                <div class="protein-info">
+                    <div class="protein-goal">Daily Protein Goal: <span id="proteinGoal">0</span>g</div>
+                    <div class="protein-subtitle">(1.7g per kg bodyweight)</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tracker Screen -->
+    <div id="trackerScreen" class="screen">
+        <div class="header">
+            <h1>Daily Tracker</h1>
+            <button class="btn-icon btn-new-day" id="newDayBtn">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="23 4 23 10 17 10"></polyline>
+                    <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path>
+                </svg>
+            </button>
+        </div>
+
+        <div class="container">
+            <div class="card progress-card">
+                <div class="charts-container">
+                    <div class="chart-wrapper">
+                        <div class="chart-label">Calories</div>
+                        <div class="chart-container">
+                            <svg class="chart-svg" width="120" height="120">
+                                <circle class="chart-bg" cx="60" cy="60" r="54"></circle>
+                                <circle class="chart-progress calories" id="caloriesCircle" cx="60" cy="60" r="54"></circle>
+                            </svg>
+                            <div class="chart-text">
+                                <div class="chart-value" id="currentCalories">0</div>
+                                <div class="chart-target">/ <span id="targetCalories">0</span></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="chart-wrapper">
+                        <div class="chart-label">Protein</div>
+                        <div class="chart-container">
+                            <svg class="chart-svg" width="120" height="120">
+                                <circle class="chart-bg" cx="60" cy="60" r="54"></circle>
+                                <circle class="chart-progress protein" id="proteinCircle" cx="60" cy="60" r="54"></circle>
+                            </svg>
+                            <div class="chart-text">
+                                <div class="chart-value" id="currentProtein">0</div>
+                                <div class="chart-target">/ <span id="targetProtein">0</span>g</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <button class="btn btn-undo" id="undoBtn" disabled>
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M3 7v6h6"></path>
+                        <path d="M21 17a9 9 0 00-9-9 9 9 0 00-6 2.3L3 13"></path>
+                    </svg>
+                    Undo Last Food
+                </button>
+            </div>
+
+            <div class="action-buttons">
+                <button class="btn btn-camera" id="scanBtn">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path>
+                        <circle cx="12" cy="13" r="4"></circle>
+                    </svg>
+                    Scan Food
+                </button>
+                <button class="btn btn-estimate" id="estimateBtn">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                        <line x1="9" y1="9" x2="15" y2="9"></line>
+                        <line x1="9" y1="15" x2="15" y2="15"></line>
+                    </svg>
+                    Estimate
+                </button>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h2>Saved Foods</h2>
+                    <button class="btn-icon" id="addFoodBtn">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <line x1="12" y1="5" x2="12" y2="19"></line>
+                            <line x1="5" y1="12" x2="19" y2="12"></line>
+                        </svg>
+                    </button>
+                </div>
+                <div id="savedFoodsList" class="saved-foods-list">
+                    <p class="empty-message">No saved foods yet. Add some!</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Camera Modal -->
+    <div id="cameraModal" class="modal">
+        <video id="video" autoplay playsinline></video>
+        <canvas id="canvas" style="display: none;"></canvas>
+        <div class="camera-controls">
+            <button class="btn btn-cancel" id="cancelCamera">Cancel</button>
+            <button class="btn btn-capture" id="captureBtn">Capture</button>
+        </div>
+    </div>
+
+    <!-- Add Food Modal -->
+    <div id="addFoodModal" class="modal">
+        <div class="modal-content">
+            <h2>Add New Food</h2>
+            <div class="form-group">
+                <input type="text" id="foodName" placeholder="Food name">
+            </div>
+            <div class="form-group">
+                <input type="number" id="foodCalories" placeholder="Calories">
+            </div>
+            <div class="form-group">
+                <input type="number" step="0.1" id="foodProtein" placeholder="Protein (g)">
+            </div>
+            <div class="modal-buttons">
+                <button class="btn btn-cancel" id="cancelAddFood">Cancel</button>
+                <button class="btn btn-primary" id="saveFood">Save</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Estimator Modal -->
+    <div id="estimatorModal" class="modal">
+        <div class="modal-content modal-large">
+            <h2>Meal Estimator</h2>
+            <div id="estimatorItems" class="estimator-items">
+                <p class="empty-message">Select foods from your saved items</p>
+            </div>
+            <div id="savedFoodsForEstimator" class="saved-foods-estimator">
+                <h3>Add from saved foods:</h3>
+                <div id="estimatorFoodsList"></div>
+            </div>
+            <div id="estimatorTotal" class="estimator-total" style="display: none;">
+                <div class="total-label">Total</div>
+                <div class="total-value">
+                    <span id="estimatorTotalCal">0</span> cal • <span id="estimatorTotalPro">0</span>g protein
+                </div>
+            </div>
+            <div class="modal-buttons">
+                <button class="btn btn-cancel" id="cancelEstimator">Cancel</button>
+                <button class="btn btn-primary" id="confirmEstimate" disabled>
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="20 6 9 17 4 12"></polyline>
+                    </svg>
+                    Add to Daily
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
