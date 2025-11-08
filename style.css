@@ -344,7 +344,7 @@ input:focus,
 
 .chart-text {
     position: absolute;
-    top: 55%;
+    top: 60%;
     left: 60%;
     transform: translate(-50%, -50%);
     text-align: center;
@@ -619,3 +619,4 @@ input:focus,
     }
 
 }
+
