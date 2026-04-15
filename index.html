@@ -158,12 +158,23 @@
             <div class="card">
                 <div class="card-header">
                     <h2>Saved Foods</h2>
-                    <button class="btn-icon" id="addFoodBtn">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <line x1="12" y1="5" x2="12" y2="19"></line>
-                            <line x1="5" y1="12" x2="19" y2="12"></line>
-                        </svg>
-                    </button>
+                    <div class="header-buttons">
+                        <button class="btn-icon btn-sort" id="sortFoodsBtn" title="Sort A-Z">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <line x1="4" y1="6" x2="11" y2="6"></line>
+                                <line x1="4" y1="12" x2="11" y2="12"></line>
+                                <line x1="4" y1="18" x2="11" y2="18"></line>
+                                <polygon points="15 6 20 11 15 11"></polygon>
+                                <line x1="17.5" y1="11" x2="17.5" y2="18"></line>
+                            </svg>
+                        </button>
+                        <button class="btn-icon" id="addFoodBtn">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <line x1="12" y1="5" x2="12" y2="19"></line>
+                                <line x1="5" y1="12" x2="19" y2="12"></line>
+                            </svg>
+                        </button>
+                    </div>
                 </div>
                 <div id="savedFoodsList" class="saved-foods-list">
                     <p class="empty-message">No saved foods yet. Add some!</p>
