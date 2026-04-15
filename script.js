@@ -134,6 +134,7 @@ function setupEventListeners() {
     document.getElementById('scanBtn').addEventListener('click', startCamera);
     document.getElementById('estimateBtn').addEventListener('click', openEstimator);
     document.getElementById('addFoodBtn').addEventListener('click', openAddFoodModal);
+    document.getElementById('sortFoodsBtn').addEventListener('click', sortFoodsAlphabetically);
 
     // Camera Modal
     document.getElementById('cancelCamera').addEventListener('click', stopCamera);
@@ -369,6 +370,19 @@ function deleteSavedFood(id) {
         saveAllData();
         renderSavedFoods();
     }
+}
+
+function sortFoodsAlphabetically() {
+    if (savedFoods.length === 0) {
+        return;
+    }
+    
+    savedFoods.sort((a, b) => {
+        return a.name.toLowerCase().localeCompare(b.name.toLowerCase());
+    });
+    
+    saveAllData();
+    renderSavedFoods();
 }
 
 // Camera Functions
