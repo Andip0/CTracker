@@ -296,7 +296,7 @@ input:focus,
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 16px;
-    margin-bottom: 30px;
+    margin-bottom: 16px;
 }
 
 .chart-wrapper {
@@ -344,8 +344,8 @@ input:focus,
 
 .chart-text {
     position: absolute;
-    top: 60%;
-    left: 60%;
+    top: 50%;
+    left: 50%;
     transform: translate(-50%, -50%);
     text-align: center;
 }
@@ -395,6 +395,11 @@ input:focus,
     margin-bottom: 16px;
 }
 
+.header-buttons {
+    display: flex;
+    gap: 8px;
+}
+
 .card-header .btn-icon {
     background: #3b82f6;
     color: white;
@@ -402,6 +407,14 @@ input:focus,
 
 .card-header .btn-icon:hover {
     background: #2563eb;
+}
+
+.btn-sort {
+    background: #7c3aed !important;
+}
+
+.btn-sort:hover {
+    background: #6d28d9 !important;
 }
 
 .saved-foods-list,
@@ -617,6 +630,4 @@ input:focus,
     .chart-value {
         font-size: 20px;
     }
-
 }
-
