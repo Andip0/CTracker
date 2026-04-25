@@ -1,4 +1,3 @@
-// State
 let profile = {
     gender: '',
     age: 0,
@@ -26,7 +25,6 @@ let savedFoods = [];
 let estimatorItems = [];
 let videoStream = null;
 
-// Initialize
 document.addEventListener('DOMContentLoaded', () => {
     loadAllData();
     setupEventListeners();
@@ -34,18 +32,15 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 function loadAllData() {
-    // Load saved foods
     const savedFoodsData = localStorage.getItem('savedFoods');
     if (savedFoodsData) {
         savedFoods = JSON.parse(savedFoodsData);
     }
 
-    // Load profile
     const savedProfile = localStorage.getItem('profile');
     if (savedProfile) {
         profile = JSON.parse(savedProfile);
         
-        // Restore profile inputs
         if (profile.age) document.getElementById('age').value = profile.age;
         if (profile.weight) document.getElementById('weight').value = profile.weight;
         if (profile.height) document.getElementById('height').value = profile.height;
@@ -59,19 +54,16 @@ function loadAllData() {
         }
     }
 
-    // Load goals
     const savedGoals = localStorage.getItem('goals');
     if (savedGoals) {
         goals = JSON.parse(savedGoals);
     }
 
-    // Load daily progress
     const savedDaily = localStorage.getItem('daily');
     if (savedDaily) {
         daily = JSON.parse(savedDaily);
     }
 
-    // Load current screen
     const currentScreen = localStorage.getItem('currentScreen');
     if (currentScreen && currentScreen !== 'profileScreen') {
         showScreen(currentScreen);
@@ -109,7 +101,6 @@ function saveAllData() {
 }
 
 function setupEventListeners() {
-    // Profile Screen
     document.querySelectorAll('.gender-btn').forEach(btn => {
         btn.addEventListener('click', (e) => {
             document.querySelectorAll('.gender-btn').forEach(b => b.classList.remove('active'));
@@ -120,7 +111,6 @@ function setupEventListeners() {
 
     document.getElementById('calculateBtn').addEventListener('click', calculateGoals);
 
-    // Goal Screen
     document.querySelectorAll('.goal-card').forEach(card => {
         card.addEventListener('click', (e) => {
             const goalType = e.currentTarget.dataset.goal;
@@ -128,7 +118,6 @@ function setupEventListeners() {
         });
     });
 
-    // Tracker Screen
     document.getElementById('newDayBtn').addEventListener('click', newDay);
     document.getElementById('undoBtn').addEventListener('click', undoLastFood);
     document.getElementById('scanBtn').addEventListener('click', startCamera);
@@ -136,15 +125,12 @@ function setupEventListeners() {
     document.getElementById('addFoodBtn').addEventListener('click', openAddFoodModal);
     document.getElementById('sortFoodsBtn').addEventListener('click', sortFoodsAlphabetically);
 
-    // Camera Modal
     document.getElementById('cancelCamera').addEventListener('click', stopCamera);
     document.getElementById('captureBtn').addEventListener('click', capturePhoto);
 
-    // Add Food Modal
     document.getElementById('cancelAddFood').addEventListener('click', closeAddFoodModal);
     document.getElementById('saveFood').addEventListener('click', saveNewFood);
 
-    // Estimator Modal
     document.getElementById('cancelEstimator').addEventListener('click', closeEstimator);
     document.getElementById('confirmEstimate').addEventListener('click', confirmEstimate);
 }
@@ -160,7 +146,6 @@ function calculateGoals() {
         return;
     }
 
-    // Calculate BMR using Mifflin-St Jeor Equation
     let bmr;
     if (profile.gender === 'male') {
         bmr = 10 * profile.weight + 6.25 * profile.height - 5 * profile.age + 5;
@@ -168,10 +153,9 @@ function calculateGoals() {
         bmr = 10 * profile.weight + 6.25 * profile.height - 5 * profile.age - 161;
     }
 
-    // Calculate TDEE using selected activity level
     goals.maintenance = Math.round(bmr * profile.activityLevel);
-    goals.deficit = Math.round(goals.maintenance * 0.85); // 15% lower
-    goals.surplus = Math.round(goals.maintenance * 1.20); // 20% higher
+    goals.deficit = Math.round(goals.maintenance * 0.85);
+    goals.surplus = Math.round(goals.maintenance * 1.20);
     goals.protein = Math.round(profile.weight * 1.7);
 
     saveAllData();
@@ -219,7 +203,6 @@ function updateDailyProgress() {
     document.getElementById('currentCalories').textContent = daily.calories;
     document.getElementById('currentProtein').textContent = daily.protein;
 
-    // Update undo button state
     const undoBtn = document.getElementById('undoBtn');
     if (daily.history && daily.history.length > 0) {
         undoBtn.disabled = false;
@@ -227,7 +210,6 @@ function updateDailyProgress() {
         undoBtn.disabled = true;
     }
 
-    // Update circular progress for calories
     const calProgress = Math.min((daily.calories / goals.calories) * 100, 100);
     const calCircle = document.getElementById('caloriesCircle');
     const calCircumference = 2 * Math.PI * 54;
@@ -235,7 +217,6 @@ function updateDailyProgress() {
     calCircle.style.strokeDasharray = calCircumference;
     calCircle.style.strokeDashoffset = calOffset;
 
-    // Update circular progress for protein
     const proProgress = Math.min((daily.protein / goals.protein) * 100, 100);
     const proCircle = document.getElementById('proteinCircle');
     const proCircumference = 2 * Math.PI * 54;
@@ -245,7 +226,6 @@ function updateDailyProgress() {
 }
 
 function addToDaily(calories, protein) {
-    // Add to history for undo functionality
     if (!daily.history) {
         daily.history = [];
     }
@@ -263,14 +243,11 @@ function undoLastFood() {
         return;
     }
     
-    // Get the last food entry
     const lastEntry = daily.history.pop();
     
-    // Subtract it from totals
     daily.calories -= lastEntry.calories;
     daily.protein -= lastEntry.protein;
     
-    // Ensure we don't go negative
     if (daily.calories < 0) daily.calories = 0;
     if (daily.protein < 0) daily.protein = 0;
     
@@ -291,7 +268,6 @@ function newDay() {
     }
 }
 
-// Saved Foods Management
 function renderSavedFoods() {
     const list = document.getElementById('savedFoodsList');
     
@@ -385,7 +361,6 @@ function sortFoodsAlphabetically() {
     renderSavedFoods();
 }
 
-// Camera Functions
 async function startCamera() {
     try {
         videoStream = await navigator.mediaDevices.getUserMedia({ 
@@ -466,7 +441,6 @@ async function analyzeFood(imageData) {
     }
 }
 
-// Estimator Functions
 function openEstimator() {
     estimatorItems = [];
     renderEstimatorItems();
